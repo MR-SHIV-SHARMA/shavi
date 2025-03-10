@@ -35,7 +35,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-my-nextjs-project/
+shavi/
 ├── package.json
 ├── next.config.js
 ├── README.md
@@ -44,15 +44,79 @@ my-nextjs-project/
 │ ├── layout.js // ग्लोबल लेआउट (साझा Navbar, Footer आदि)
 │ ├── page.js // डिफ़ॉल्ट होम पेज (यदि ज़रूरत हो)
 │ ├── api/ // API रूट्स
-│ ├── fileConversion/
-│ │ ├── route.js // HTTP मेथड हैंडलिंग
-│ │ ├── controller.js // बिज़नेस लॉजिक और इनपुट वैलिडेशन
-│ │ ├── service.js // मुख्य प्रोसेसिंग लॉजिक
-│ │ ├── utils.js // सहायक फ़ंक्शंस
-│ │ ├── config.js // कॉन्फ़िगरेशन सेटिंग्स
-│ │ ├── validations.js // (ऐच्छिक) विशेष वैलिडेशन लॉजिक
-│ │ └── middleware.js // (ऐच्छिक) मिडलवेयर कार्यक्षमता
-│ ├── textSummarizer/
+│ │ ├── fileConversion/
+│ │ │ ├── route.js // HTTP मेथड हैंडलिंग
+│ │ │ ├── controller.js // बिज़नेस लॉजिक & इनपुट वैलिडेशन
+│ │ │ ├── service.js // मुख्य प्रोसेसिंग लॉजिक
+│ │ │ ├── utils.js // सहायक फ़ंक्शंस
+│ │ │ ├── config.js // कॉन्फ़िगरेशन सेटिंग्स
+│ │ │ ├── validations.js // (ऐच्छिक) वैलिडेशन लॉजिक
+│ │ │ └── middleware.js // (ऐच्छिक) मिडलवेयर (ऑथेंटिकेशन, लॉगिंग आदि)
+│ │ ├── textSummarizer/
+│ │ │ ├── route.js
+│ │ │ ├── controller.js
+│ │ │ ├── service.js
+│ │ │ ├── utils.js
+│ │ │ ├── config.js
+│ │ │ ├── validations.js
+│ │ │ └── middleware.js
+│ │ ├── documentTranslator/
+│ │ │ ├── route.js
+│ │ │ ├── controller.js
+│ │ │ ├── service.js
+│ │ │ ├── utils.js
+│ │ │ ├── config.js
+│ │ │ ├── validations.js
+│ │ │ └── middleware.js
+│ │ ├── pdfConverter/
+│ │ │ ├── route.js
+│ │ │ ├── controller.js
+│ │ │ ├── service.js
+│ │ │ ├── utils.js
+│ │ │ ├── config.js
+│ │ │ ├── validations.js
+│ │ │ └── middleware.js
+│ │ ├── audioTranscription/
+│ │ │ ├── route.js
+│ │ │ ├── controller.js
+│ │ │ ├── service.js
+│ │ │ ├── utils.js
+│ │ │ ├── config.js
+│ │ │ ├── validations.js
+│ │ │ └── middleware.js
+│ │ ├── videoSubtitleGenerator/
+│ │ │ ├── route.js
+│ │ │ ├── controller.js
+│ │ │ ├── service.js
+│ │ │ ├── utils.js
+│ │ │ ├── config.js
+│ │ │ ├── validations.js
+│ │ │ └── middleware.js
+│ │ ├── dataFormatConverter/
+│ │ │ ├── route.js
+│ │ │ ├── controller.js
+│ │ │ ├── service.js
+│ │ │ ├── utils.js
+│ │ │ ├── config.js
+│ │ │ ├── validations.js
+│ │ │ └── middleware.js
+│ │ ├── codeFormatter/
+│ │ │ ├── route.js
+│ │ │ ├── controller.js
+│ │ │ ├── service.js
+│ │ │ ├── utils.js
+│ │ │ ├── config.js
+│ │ │ ├── validations.js
+│ │ │ └── middleware.js
+│ │ ├── ebookConverter/
+│ │ │ ├── route.js
+│ │ │ ├── controller.js
+│ │ │ ├── service.js
+│ │ │ ├── utils.js
+│ │ │ ├── config.js
+│ │ │ ├── validations.js
+│ │ │ └── middleware.js
+│ │ └── imageCompressor/
 │ │ ├── route.js
 │ │ ├── controller.js
 │ │ ├── service.js
@@ -60,146 +124,120 @@ my-nextjs-project/
 │ │ ├── config.js
 │ │ ├── validations.js
 │ │ └── middleware.js
-│ ├── documentTranslator/
-│ │ ├── route.js
-│ │ ├── controller.js
-│ │ ├── service.js
-│ │ ├── utils.js
-│ │ ├── config.js
-│ │ ├── validations.js
-│ │ └── middleware.js
-│ ├── pdfConverter/
-│ │ ├── route.js
-│ │ ├── controller.js
-│ │ ├── service.js
-│ │ ├── utils.js
-│ │ ├── config.js
-│ │ ├── validations.js
-│ │ └── middleware.js
-│ ├── audioTranscription/
-│ │ ├── route.js
-│ │ ├── controller.js
-│ │ ├── service.js
-│ │ ├── utils.js
-│ │ ├── config.js
-│ │ ├── validations.js
-│ │ └── middleware.js
-│ ├── videoSubtitleGenerator/
-│ │ ├── route.js
-│ │ ├── controller.js
-│ │ ├── service.js
-│ │ ├── utils.js
-│ │ ├── config.js
-│ │ ├── validations.js
-│ │ └── middleware.js
-│ ├── dataFormatConverter/
-│ │ ├── route.js
-│ │ ├── controller.js
-│ │ ├── service.js
-│ │ ├── utils.js
-│ │ ├── config.js
-│ │ ├── validations.js
-│ │ └── middleware.js
-│ ├── codeFormatter/
-│ │ ├── route.js
-│ │ ├── controller.js
-│ │ ├── service.js
-│ │ ├── utils.js
-│ │ ├── config.js
-│ │ ├── validations.js
-│ │ └── middleware.js
-│ ├── ebookConverter/
-│ │ ├── route.js
-│ │ ├── controller.js
-│ │ ├── service.js
-│ │ ├── utils.js
-│ │ ├── config.js
-│ │ ├── validations.js
-│ │ └── middleware.js
-│ └── imageCompressor/
-│ ├── route.js
-│ ├── controller.js
-│ ├── service.js
-│ ├── utils.js
-│ ├── config.js
-│ ├── validations.js
-│ └── middleware.js
 │ └── projects/ // सभी प्रोजेक्ट्स / टूल्स के लिए रूट्स
 │ ├── imageBackgroundRemover/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js // "About Us" बटन का कम्पोनेंट
-│ │ ├── layout.js // वैकल्पिक: कस्टम लेआउट (यदि ग्लोबल से अलग चाहिए)
-│ │ └── page.js // इमेज बैकग्राउंड रिमूवर का पेज
+│ │ │ └── AboutButton.js
+│ │ ├── layout.js // कस्टम लेआउट (यदि आवश्यक हो)
+│ │ ├── page.js // मुख्य/होम पेज
+│ │ ├── about.js // About पेज
+│ │ ├── features.js // Features पेज
+│ │ ├── faq.js // FAQ पेज
+│ │ └── contact.js // Contact पेज
 │ ├── textSummarizer/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
 │ │ │ └── AboutButton.js
 │ │ ├── layout.js
-│ │ └── page.js // टेक्स्ट समरीज़र का पेज
+│ │ ├── page.js
+│ │ ├── about.js
+│ │ ├── features.js
+│ │ ├── faq.js
+│ │ └── contact.js
 │ ├── documentTranslator/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
 │ │ │ └── AboutButton.js
 │ │ ├── layout.js
-│ │ └── page.js // डॉक्यूमेंट ट्रांसलेटर का पेज
+│ │ ├── page.js
+│ │ ├── about.js
+│ │ ├── features.js
+│ │ ├── faq.js
+│ │ └── contact.js
 │ ├── pdfConverter/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
 │ │ │ └── AboutButton.js
 │ │ ├── layout.js
-│ │ └── page.js // PDF कन्वर्टर का पेज
+│ │ ├── page.js
+│ │ ├── about.js
+│ │ ├── features.js
+│ │ ├── faq.js
+│ │ └── contact.js
 │ ├── audioTranscription/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
 │ │ │ └── AboutButton.js
 │ │ ├── layout.js
-│ │ └── page.js // ऑडियो ट्रांसक्रिप्शन टूल का पेज
+│ │ ├── page.js
+│ │ ├── about.js
+│ │ ├── features.js
+│ │ ├── faq.js
+│ │ └── contact.js
 │ ├── videoSubtitleGenerator/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
 │ │ │ └── AboutButton.js
 │ │ ├── layout.js
-│ │ └── page.js // वीडियो सबटाइटल जेनरेटर का पेज
+│ │ ├── page.js
+│ │ ├── about.js
+│ │ ├── features.js
+│ │ ├── faq.js
+│ │ └── contact.js
 │ ├── dataFormatConverter/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
 │ │ │ └── AboutButton.js
 │ │ ├── layout.js
-│ │ └── page.js // डेटा फॉर्मेट कन्वर्टर का पेज
+│ │ ├── page.js
+│ │ ├── about.js
+│ │ ├── features.js
+│ │ ├── faq.js
+│ │ └── contact.js
 │ ├── codeFormatter/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
 │ │ │ └── AboutButton.js
 │ │ ├── layout.js
-│ │ └── page.js // कोड फॉर्मेटर का पेज
+│ │ ├── page.js
+│ │ ├── about.js
+│ │ ├── features.js
+│ │ ├── faq.js
+│ │ └── contact.js
 │ ├── ebookConverter/
 │ │ ├── components/
 │ │ │ ├── CustomNavbar.js
 │ │ │ ├── CustomFooter.js
 │ │ │ └── AboutButton.js
 │ │ ├── layout.js
-│ │ └── page.js // ई-बुक कन्वर्टर का पेज
+│ │ ├── page.js
+│ │ ├── about.js
+│ │ ├── features.js
+│ │ ├── faq.js
+│ │ └── contact.js
 │ └── imageCompressor/
 │ ├── components/
 │ │ ├── CustomNavbar.js
 │ │ ├── CustomFooter.js
 │ │ └── AboutButton.js
 │ ├── layout.js
-│ └── page.js // इमेज कम्प्रेसर का पेज
+│ ├── page.js
+│ ├── about.js
+│ ├── features.js
+│ ├── faq.js
+│ └── contact.js
 ├── components/ // ग्लोबल साझा UI कम्पोनेंट्स (जैसे सामान्य Navbar, Footer, आदि)
 │ ├── Navbar.js  
  │ ├── Footer.js  
  │ └── ...  
  └── styles/
-└── globals.css // ग्लोबल CSS फाइल
-#   s h a v i  
- 
+└── globals.css // ग्लोबल CSS फाइल y hi thik hi thik hai
