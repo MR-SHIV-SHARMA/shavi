@@ -11,7 +11,7 @@ export default function Home() {
                 Shavi's AI-powered background remover helps you remove backgrounds from images with a single click.
             </p>
             <Image
-                src="/bg-removal-example.png"
+                src="/bg-removal-example.png" 
                 alt="Background Removal Example"
                 width={500}
                 height={300}

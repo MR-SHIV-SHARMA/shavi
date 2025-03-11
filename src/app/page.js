@@ -7,7 +7,7 @@ export default function Home() {
         {/* Shavi Logo */}
         <Image
           className="dark:invert"
-          src="/shavi-logo.svg" // सुनिश्चित करें कि आपके public फोल्डर में shavi-logo.svg मौजूद है
+          src="/shavi-logo.jpg" // सुनिश्चित करें कि आपके public फोल्डर में shavi-logo.svg मौजूद है
           alt="Shavi logo"
           width={180}
           height={38}
