@@ -25,7 +25,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden">
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
@@ -48,13 +48,13 @@ export default function Contact() {
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center"
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center w-full"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 dark:from-blue-800/20 dark:to-purple-800/20 -skew-y-3" />
-        <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent relative">
+        <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent relative">
           We're Here to Help
         </h1>
-        <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto relative">
+        <p className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto relative">
           Get instant support through our 24/7 channels or visit one of our
           global offices
         </p>
@@ -64,7 +64,7 @@ export default function Contact() {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24 w-full"
       >
         {[
           {
@@ -98,7 +98,7 @@ export default function Contact() {
             whileInView={{ scale: 1 }}
             whileHover={{ y: -5 }}
             transition={{ delay: index * 0.1 }}
-            className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
+            className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all w-full"
           >
             <div className="text-3xl mb-4">{item.icon}</div>
             <h3 className="text-xl font-semibold dark:text-white mb-2">
@@ -153,14 +153,14 @@ export default function Contact() {
       </motion.section>
 
       {/* FAQ + Form Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 w-full">
         {/* FAQ */}
         <motion.div
           initial={{ x: -50 }}
           whileInView={{ x: 0 }}
-          className="space-y-6"
+          className="space-y-6 w-full"
         >
-          <h2 className="text-3xl font-bold dark:text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold dark:text-white">
             Common Questions
           </h2>
           {[
@@ -193,7 +193,7 @@ export default function Contact() {
           initial={{ x: 50 }}
           whileInView={{ x: 0 }}
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-6 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl"
+          className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full"
         >
           <div>
             <label className="block text-sm font-medium dark:text-gray-300 mb-2">
@@ -210,7 +210,7 @@ export default function Contact() {
             </select>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <input
                 {...register("name", { required: true })}
