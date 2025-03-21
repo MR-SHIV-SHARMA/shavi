@@ -159,21 +159,23 @@ export default function Projects() {
               key={stat.label}
               className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700"
             >
-              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                {stat.value}
+              <div className="grid xl:flex xl:items-center xl:justify-between w-full p-2 sm:p-4 md:p-6 gap-2 sm:gap-4 md:gap-6">
+                <span className="min-w-0 truncate text-center xl:text-left text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-blue-600 dark:text-blue-400">
+                  {stat.value}
+                </span>
+                <div className="flex justify-center xl:justify-end">
+                  <Image
+                    src={stat.icon}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                </div>
               </div>
               <div className="text-gray-600 dark:text-gray-300 text-sm">
                 {stat.label}
-              </div>
-              <div className="text-gray-600 dark:text-gray-300 text-sm">
-                <Image
-                  src={stat.icon}
-                  alt=""
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 text-blue-600 dark:text-blue-400"
-                  aria-hidden="true"
-                />
               </div>
             </div>
           ))}
