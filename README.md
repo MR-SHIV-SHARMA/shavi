@@ -39,205 +39,388 @@ shavi/
 ├── package.json
 ├── next.config.js
 ├── README.md
+├── public/
+│ bg-removal-example.png
+│ file.svg
+│ globe.svg
+│ next.svg
+│ pexels-blue-record-766997868-19926864.jpg
+│ pexels-lyulog-5038403.jpg
+│ pexels-tizzy-30229536.jpg
+│ shavi-logo.jpg
+│ vercel.svg
+│ window.svg
+│
+├───docs
+│ getting-started.jpg
+│
+└───temp
 └── src/
-├── app/
-│ ├── layout.js // ग्लोबल लेआउट (साझा Navbar, Footer आदि)
-│ ├── page.js // डिफ़ॉल्ट होम पेज (यदि ज़रूरत हो)
-│ ├── api/ // API रूट्स
-│ │ ├── fileConversion/
-│ │ │ ├── route.js // HTTP मेथड हैंडलिंग
-│ │ │ ├── controller.js // बिज़नेस लॉजिक & इनपुट वैलिडेशन
-│ │ │ ├── service.js // मुख्य प्रोसेसिंग लॉजिक
-│ │ │ ├── utils.js // सहायक फ़ंक्शंस
-│ │ │ ├── config.js // कॉन्फ़िगरेशन सेटिंग्स
-│ │ │ ├── validations.js // (ऐच्छिक) वैलिडेशन लॉजिक
-│ │ │ └── middleware.js // (ऐच्छिक) मिडलवेयर (ऑथेंटिकेशन, लॉगिंग आदि)
-│ │ ├── textSummarizer/
-│ │ │ ├── route.js
-│ │ │ ├── controller.js
-│ │ │ ├── service.js
-│ │ │ ├── utils.js
-│ │ │ ├── config.js
-│ │ │ ├── validations.js
-│ │ │ └── middleware.js
-│ │ ├── documentTranslator/
-│ │ │ ├── route.js
-│ │ │ ├── controller.js
-│ │ │ ├── service.js
-│ │ │ ├── utils.js
-│ │ │ ├── config.js
-│ │ │ ├── validations.js
-│ │ │ └── middleware.js
-│ │ ├── pdfConverter/
-│ │ │ ├── route.js
-│ │ │ ├── controller.js
-│ │ │ ├── service.js
-│ │ │ ├── utils.js
-│ │ │ ├── config.js
-│ │ │ ├── validations.js
-│ │ │ └── middleware.js
-│ │ ├── audioTranscription/
-│ │ │ ├── route.js
-│ │ │ ├── controller.js
-│ │ │ ├── service.js
-│ │ │ ├── utils.js
-│ │ │ ├── config.js
-│ │ │ ├── validations.js
-│ │ │ └── middleware.js
-│ │ ├── videoSubtitleGenerator/
-│ │ │ ├── route.js
-│ │ │ ├── controller.js
-│ │ │ ├── service.js
-│ │ │ ├── utils.js
-│ │ │ ├── config.js
-│ │ │ ├── validations.js
-│ │ │ └── middleware.js
-│ │ ├── dataFormatConverter/
-│ │ │ ├── route.js
-│ │ │ ├── controller.js
-│ │ │ ├── service.js
-│ │ │ ├── utils.js
-│ │ │ ├── config.js
-│ │ │ ├── validations.js
-│ │ │ └── middleware.js
-│ │ ├── codeFormatter/
-│ │ │ ├── route.js
-│ │ │ ├── controller.js
-│ │ │ ├── service.js
-│ │ │ ├── utils.js
-│ │ │ ├── config.js
-│ │ │ ├── validations.js
-│ │ │ └── middleware.js
-│ │ ├── ebookConverter/
-│ │ │ ├── route.js
-│ │ │ ├── controller.js
-│ │ │ ├── service.js
-│ │ │ ├── utils.js
-│ │ │ ├── config.js
-│ │ │ ├── validations.js
-│ │ │ └── middleware.js
-│ │ └── imageCompressor/
-│ │ ├── route.js
-│ │ ├── controller.js
-│ │ ├── service.js
-│ │ ├── utils.js
-│ │ ├── config.js
-│ │ ├── validations.js
-│ │ └── middleware.js
-│ └── projects/ // सभी प्रोजेक्ट्स / टूल्स के लिए रूट्स
-│ ├── imageBackgroundRemover/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js // कस्टम लेआउट (यदि आवश्यक हो)
-│ │ ├── page.js // मुख्य/होम पेज
-│ │ ├── about.js // About पेज
-│ │ ├── features.js // Features पेज
-│ │ ├── faq.js // FAQ पेज
-│ │ └── contact.js // Contact पेज
-│ ├── textSummarizer/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js
-│ │ ├── page.js
-│ │ ├── about.js
-│ │ ├── features.js
-│ │ ├── faq.js
-│ │ └── contact.js
-│ ├── documentTranslator/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js
-│ │ ├── page.js
-│ │ ├── about.js
-│ │ ├── features.js
-│ │ ├── faq.js
-│ │ └── contact.js
-│ ├── pdfConverter/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js
-│ │ ├── page.js
-│ │ ├── about.js
-│ │ ├── features.js
-│ │ ├── faq.js
-│ │ └── contact.js
-│ ├── audioTranscription/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js
-│ │ ├── page.js
-│ │ ├── about.js
-│ │ ├── features.js
-│ │ ├── faq.js
-│ │ └── contact.js
-│ ├── videoSubtitleGenerator/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js
-│ │ ├── page.js
-│ │ ├── about.js
-│ │ ├── features.js
-│ │ ├── faq.js
-│ │ └── contact.js
-│ ├── dataFormatConverter/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js
-│ │ ├── page.js
-│ │ ├── about.js
-│ │ ├── features.js
-│ │ ├── faq.js
-│ │ └── contact.js
-│ ├── codeFormatter/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js
-│ │ ├── page.js
-│ │ ├── about.js
-│ │ ├── features.js
-│ │ ├── faq.js
-│ │ └── contact.js
-│ ├── ebookConverter/
-│ │ ├── components/
-│ │ │ ├── CustomNavbar.js
-│ │ │ ├── CustomFooter.js
-│ │ │ └── AboutButton.js
-│ │ ├── layout.js
-│ │ ├── page.js
-│ │ ├── about.js
-│ │ ├── features.js
-│ │ ├── faq.js
-│ │ └── contact.js
-│ └── imageCompressor/
-│ ├── components/
-│ │ ├── CustomNavbar.js
-│ │ ├── CustomFooter.js
-│ │ └── AboutButton.js
-│ ├── layout.js
-│ ├── page.js
-│ ├── about.js
-│ ├── features.js
-│ ├── faq.js
-│ └── contact.js
-├── components/ // ग्लोबल साझा UI कम्पोनेंट्स (जैसे सामान्य Navbar, Footer, आदि)
-│ ├── Navbar.js  
- │ ├── Footer.js  
- │ └── ...  
- └── styles/
-└── globals.css // ग्लोबल CSS फाइल y hi thik hi thik hai
+├───app
+│ │ favicon.ico
+│ │ globals.css
+│ │ layout.js
+│ │ page.js
+│ │
+│ ├───about
+│ │ page.jsx
+│ │
+│ ├───api
+│ │ ├───audioTranscription
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ ├───codeFormatter
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ ├───dataFormatConverter
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ ├───documentTranslator
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ ├───ebookConverter
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ ├───fileConversion
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ ├───imageCompressor
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ ├───pdfConverter
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ ├───textSummarizer
+│ │ │ config.js
+│ │ │ controller.js
+│ │ │ middleware.js
+│ │ │ route.js
+│ │ │ service.js
+│ │ │ utils.js
+│ │ │ validations.js
+│ │ │
+│ │ └───videoSubtitleGenerator
+│ │ config.js
+│ │ controller.js
+│ │ middleware.js
+│ │ route.js
+│ │ service.js
+│ │ utils.js
+│ │ validations.js
+│ │
+│ ├───contact
+│ │ page.jsx
+│ │
+│ ├───documentation
+│ │ page.jsx
+│ │
+│ ├───faq
+│ │ page.jsx
+│ │
+│ ├───features
+│ │ page.jsx
+│ │
+│ └───projects
+│ │ page.jsx
+│ │
+│ ├───audioTranscription
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ ├───codeFormatter
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ ├───dataFormatConverter
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ ├───documentTranslator
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ ├───ebookConverter
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ ├───imageBackgroundRemover
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ ├───imageCompressor
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ ├───pdfConverter
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ ├───textSummarizer
+│ │ │ layout.js
+│ │ │ page.js
+│ │ │
+│ │ ├───about
+│ │ │ page.jsx
+│ │ │
+│ │ ├───components
+│ │ │ About.jsx
+│ │ │ Contact.jsx
+│ │ │ CustomFooter.jsx
+│ │ │ CustomNavbar.jsx
+│ │ │ Faq.jsx
+│ │ │ Features.jsx
+│ │ │
+│ │ ├───contact
+│ │ │ page.jsx
+│ │ │
+│ │ ├───faq
+│ │ │ page.jsx
+│ │ │
+│ │ └───features
+│ │ page.jsx
+│ │
+│ └───videoSubtitleGenerator
+│ │ layout.js
+│ │ page.js
+│ │
+│ ├───about
+│ │ page.jsx
+│ │
+│ ├───components
+│ │ About.jsx
+│ │ Contact.jsx
+│ │ CustomFooter.jsx
+│ │ CustomNavbar.jsx
+│ │ Faq.jsx
+│ │ Features.jsx
+│ │
+│ ├───contact
+│ │ page.jsx
+│ │
+│ ├───faq
+│ │ page.jsx
+│ │
+│ └───features
+│ page.jsx
+│
+├───components
+│ About.jsx
+│ Contact.jsx
+│ Documentation.jsx
+│ Faq.jsx
+│ Features.jsx
+│ Footer.jsx
+│ LayoutWrapper.jsx
+│ Navbar.jsx
+│ Projects.jsx
+│
+└───lib
+docs.js
