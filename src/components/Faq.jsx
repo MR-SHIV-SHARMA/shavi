@@ -5,33 +5,182 @@ import Link from "next/link";
 
 export const metadata = {
   title: "FAQ Center - AI Tools Explained",
-  description:
-    "Get instant answers about our background removal, document processing, and AI-powered solutions",
+  description: "Get instant answers about our AI-powered solutions",
   keywords: "FAQ, AI tools help, background removal, document processing",
 };
 
 export default function FAQ() {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeFAQ, setActiveFAQ] = useState(null);
 
-  const faqItems = [
+  const categories = [
     {
-      question: "How does the AI background removal work?",
-      answer:
-        "Our neural network analyzes images in real-time, using advanced computer vision to detect and remove backgrounds with pixel-perfect precision",
+      title: "🖼️ Image Tools",
+      items: [
+        {
+          question: "How does the AI background removal work?",
+          answer:
+            "Our AI uses advanced computer vision techniques to detect and remove backgrounds from images with high accuracy.",
+        },
+        {
+          question: "Can I remove the background from multiple images at once?",
+          answer:
+            "Yes! Our batch processing feature allows you to remove backgrounds from multiple images at once.",
+        },
+        {
+          question: "How does the image compressor work?",
+          answer:
+            "Our image compressor reduces file size while maintaining high quality, making it perfect for web use.",
+        },
+        {
+          question: "What formats are supported for compression?",
+          answer:
+            "We support PNG, JPG, and WEBP formats for image compression.",
+        },
+      ],
     },
     {
-      question: "Is there a limit on file size?",
-      answer:
-        "Free tier supports files up to 10MB. Premium users can process files up to 2GB",
+      title: "📄 Document Processing",
+      items: [
+        {
+          question: "Can I convert images and documents to PDF?",
+          answer:
+            "Yes! Our PDF converter allows you to convert images, text files, and Word documents into high-quality PDFs.",
+        },
+        {
+          question: "Can I extract text from a PDF?",
+          answer:
+            "Yes! Our tool can extract text from scanned PDFs using Optical Character Recognition (OCR).",
+        },
+        {
+          question: "What languages does the document translator support?",
+          answer:
+            "We support over 100 languages, including English, Spanish, French, German, and Chinese.",
+        },
+        {
+          question: "Can I translate entire PDFs and Word documents?",
+          answer:
+            "Yes! You can upload PDFs, DOCX files, or plain text files for instant translation.",
+        },
+      ],
     },
     {
-      question: "What image formats do you support?",
-      answer: "All major formats including PNG, JPG, WEBP, and SVG",
+      title: "🔄 Data Conversion",
+      items: [
+        {
+          question: "What data formats can I convert?",
+          answer:
+            "You can convert JSON, XML, CSV, and YAML formats seamlessly.",
+        },
+        {
+          question: "Is the conversion process lossless?",
+          answer:
+            "Yes, our tool ensures high accuracy without any data loss during conversion.",
+        },
+        {
+          question: "What ebook formats are supported?",
+          answer: "You can convert between EPUB, MOBI, PDF, and AZW3 formats.",
+        },
+        {
+          question: "Does this tool keep the original formatting?",
+          answer:
+            "Yes, our conversion engine maintains text structure, fonts, and images.",
+        },
+      ],
     },
     {
-      question: "How secure is my data?",
-      answer:
-        "Files are encrypted in transit and automatically deleted after 24 hours",
+      title: "🎙️ Audio & Video Tools",
+      items: [
+        {
+          question: "Can I convert speech to text?",
+          answer:
+            "Yes! Our AI-powered transcription tool converts audio files into text with high accuracy.",
+        },
+        {
+          question: "What audio formats are supported?",
+          answer:
+            "We support MP3, WAV, and FLAC audio files for transcription.",
+        },
+        {
+          question: "Can I add subtitles to my videos?",
+          answer:
+            "Yes! Our tool generates subtitles automatically using speech recognition.",
+        },
+        {
+          question: "What subtitle formats are supported?",
+          answer: "We support SRT, VTT, and plain text formats for subtitles.",
+        },
+      ],
+    },
+    {
+      title: "💻 Developer Tools",
+      items: [
+        {
+          question:
+            "What programming languages does the code formatter support?",
+          answer: "We support JavaScript, Python, Java, C++, and many more.",
+        },
+        {
+          question: "Can I customize the code formatting?",
+          answer:
+            "Yes, you can choose from different styles and indentation options.",
+        },
+        {
+          question: "Is there an API for developers?",
+          answer:
+            "Yes, we provide APIs for integrating our AI tools into your own applications. Contact us for API access.",
+        },
+      ],
+    },
+    {
+      title: "📂 File Management",
+      items: [
+        {
+          question: "What types of files can I convert?",
+          answer:
+            "You can convert images, documents, audio files, and videos into different formats.",
+        },
+        {
+          question: "Is there a file size limit?",
+          answer:
+            "Free users can upload files up to 10MB, while premium users can convert files up to 2GB.",
+        },
+      ],
+    },
+    {
+      title: "📝 AI Writing & Summarization",
+      items: [
+        {
+          question: "How does the text summarizer work?",
+          answer:
+            "Our AI extracts key points from long text documents and provides concise summaries.",
+        },
+        {
+          question: "Can I adjust the summary length?",
+          answer:
+            "Yes! You can choose between short, medium, or detailed summaries.",
+        },
+      ],
+    },
+    {
+      title: "❓ General Questions",
+      items: [
+        {
+          question: "Do I need to install any software?",
+          answer:
+            "No, our tool is completely web-based. You just need an internet connection.",
+        },
+        {
+          question: "Is my data secure?",
+          answer:
+            "Yes! All files are encrypted and automatically deleted after 24 hours to ensure privacy.",
+        },
+        {
+          question: "Is this tool free to use?",
+          answer:
+            "Yes, we offer a free plan with limited features. Premium users get access to advanced options and higher file limits.",
+        },
+      ],
     },
   ];
 
@@ -41,14 +190,16 @@ export default function FAQ() {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          mainEntity: faqItems.map((item) => ({
-            "@type": "Question",
-            name: item.question,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: item.answer,
-            },
-          })),
+          mainEntity: categories.flatMap((category) =>
+            category.items.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer,
+              },
+            }))
+          ),
         })}
       </script>
 
@@ -62,44 +213,36 @@ export default function FAQ() {
           AI Tools Explained
         </h1>
         <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          Have questions? We've got answers! Explore how our AI-powered
-          solutions can transform your workflow
+          Browse categorized FAQs or search for specific answers
         </p>
       </motion.section>
 
-      {/* FAQ Grid */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 grid grid-cols-1 md:grid-cols-2 gap-6"
-      >
-        {faqItems.map((item, index) => (
+      {/* Categories */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 space-y-8">
+        {categories.map((category, catIndex) => (
           <motion.div
-            key={index}
-            whileHover={{ scale: 1.02 }}
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-shadow p-6"
+            key={catIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
           >
             <button
               onClick={() =>
-                setActiveIndex(activeIndex === index ? null : index)
+                setActiveCategory(activeCategory === catIndex ? null : catIndex)
               }
-              className="w-full text-left"
-              aria-expanded={activeIndex === index}
-              aria-controls={`faq-${index}`}
+              className="w-full text-left p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-shadow"
             >
-              <h2 className="text-xl font-semibold dark:text-white flex items-center justify-between">
-                {item.question}
+              <h2 className="text-2xl font-semibold dark:text-white flex items-center justify-between">
+                {category.title}
                 <span className="text-blue-600 dark:text-blue-400 text-2xl">
-                  {activeIndex === index ? "−" : "+"}
+                  {activeCategory === catIndex ? "−" : "+"}
                 </span>
               </h2>
             </button>
 
             <motion.div
-              id={`faq-${index}`}
               initial={{ opacity: 0, height: 0 }}
               animate={
-                activeIndex === index
+                activeCategory === catIndex
                   ? {
                       opacity: 1,
                       height: "auto",
@@ -109,15 +252,56 @@ export default function FAQ() {
                       height: 0,
                     }
               }
-              className="overflow-hidden"
+              className="pl-6 mt-4 space-y-4"
             >
-              <p className="mt-4 text-gray-600 dark:text-gray-300">
-                {item.answer}
-              </p>
+              {category.items.map((item, itemIndex) => (
+                <motion.div
+                  key={itemIndex}
+                  className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4"
+                >
+                  <button
+                    onClick={() =>
+                      setActiveFAQ(
+                        activeFAQ === `${catIndex}-${itemIndex}`
+                          ? null
+                          : `${catIndex}-${itemIndex}`
+                      )
+                    }
+                    className="w-full text-left"
+                  >
+                    <h3 className="text-lg font-semibold dark:text-white flex justify-between items-center">
+                      {item.question}
+                      <span className="text-blue-600 dark:text-blue-400 text-xl ml-4">
+                        {activeFAQ === `${catIndex}-${itemIndex}` ? "−" : "+"}
+                      </span>
+                    </h3>
+                  </button>
+
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={
+                      activeFAQ === `${catIndex}-${itemIndex}`
+                        ? {
+                            opacity: 1,
+                            height: "auto",
+                          }
+                        : {
+                            opacity: 0,
+                            height: 0,
+                          }
+                    }
+                    className="overflow-hidden"
+                  >
+                    <p className="mt-2 text-gray-600 dark:text-gray-300">
+                      {item.answer}
+                    </p>
+                  </motion.div>
+                </motion.div>
+              ))}
             </motion.div>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
 
       {/* CTA Section */}
       <motion.section
@@ -127,14 +311,14 @@ export default function FAQ() {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-white mb-8">
-            Need More Help?
+            Need Personalized Assistance?
           </h2>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:shadow-lg"
           >
-            <Link href="/contact">Contact 24/7 Support</Link>
+            <Link href="/contact">Contact Support Team</Link>
           </motion.button>
         </div>
       </motion.section>
