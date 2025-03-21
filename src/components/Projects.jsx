@@ -7,7 +7,7 @@ const tools = [
   {
     id: 1,
     name: "Image Background Remover",
-    slug: "imageBackgroundRemover",
+    slug: "image-background-remover",
     description:
       "Automatically remove backgrounds from images with AI-powered precision",
     icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/image.svg",
