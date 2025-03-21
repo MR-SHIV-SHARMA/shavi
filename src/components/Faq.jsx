@@ -225,11 +225,13 @@ export default function FAQ() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() =>
                 setActiveCategory(activeCategory === catIndex ? null : catIndex)
               }
-              className="w-full text-left p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-shadow"
+              className="w-full text-left p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-shadow cursor-pointer"
             >
               <h2 className="text-2xl font-semibold dark:text-white flex items-center justify-between">
                 {category.title}
@@ -237,7 +239,7 @@ export default function FAQ() {
                   {activeCategory === catIndex ? "−" : "+"}
                 </span>
               </h2>
-            </button>
+            </motion.button>
 
             <motion.div
               initial={{ opacity: 0, height: 0 }}
@@ -259,7 +261,9 @@ export default function FAQ() {
                   key={itemIndex}
                   className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4"
                 >
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() =>
                       setActiveFAQ(
                         activeFAQ === `${catIndex}-${itemIndex}`
@@ -267,7 +271,7 @@ export default function FAQ() {
                           : `${catIndex}-${itemIndex}`
                       )
                     }
-                    className="w-full text-left"
+                    className="w-full text-left cursor-pointer"
                   >
                     <h3 className="text-lg font-semibold dark:text-white flex justify-between items-center">
                       {item.question}
@@ -275,7 +279,7 @@ export default function FAQ() {
                         {activeFAQ === `${catIndex}-${itemIndex}` ? "−" : "+"}
                       </span>
                     </h3>
-                  </button>
+                  </motion.button>
 
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
