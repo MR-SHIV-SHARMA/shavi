@@ -31,7 +31,7 @@ export default function Home() {
 
               <a
                 className="relative inline-flex items-center justify-center px-8 py-4 font-medium transition-all duration-200 border-2 border-blue-600 rounded-xl hover:bg-blue-50/50 dark:hover:bg-gray-800 group"
-                href="/docs"
+                href="/documentation"
               >
                 <span className="relative text-lg text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300">
                   Documentation
