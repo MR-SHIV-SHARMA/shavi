@@ -15,7 +15,11 @@ const Navbar = () => {
     };
 
     const handleClickOutside = (e) => {
-      if (mobileMenuOpen && !e.target.closest(".mobile-menu")) {
+      if (
+        mobileMenuOpen &&
+        !e.target.closest(".mobile-menu") &&
+        !e.target.closest(".menu-button")
+      ) {
         setMobileMenuOpen(false);
       }
     };
@@ -40,11 +44,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-white"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
@@ -84,7 +88,7 @@ const Navbar = () => {
           <button
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
-            className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="menu-button md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <svg
