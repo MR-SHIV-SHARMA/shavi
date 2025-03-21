@@ -201,7 +201,7 @@ export default function Contact() {
             </label>
             <select
               {...register("queryType", { required: true })}
-              className="w-full rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full p-2 rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             >
               <option value="">Select Inquiry Type</option>
               <option value="Technical">Technical Support</option>
@@ -215,7 +215,7 @@ export default function Contact() {
               <input
                 {...register("name", { required: true })}
                 placeholder="Full Name"
-                className="w-full rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="w-full p-2 rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               />
               {errors.name && (
                 <span className="text-red-500 text-sm">Required</span>
@@ -226,7 +226,7 @@ export default function Contact() {
                 type="email"
                 {...register("email", { required: true })}
                 placeholder="Email Address"
-                className="w-full rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                className="w-full p-2 rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               />
               {errors.email && (
                 <span className="text-red-500 text-sm">
@@ -241,7 +241,7 @@ export default function Contact() {
               {...register("message", { required: true })}
               rows="5"
               placeholder="How can we help you?"
-              className="w-full rounded-lg border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full rounded-lg p-2 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
             {errors.message && (
               <span className="text-red-500 text-sm">Message required</span>
