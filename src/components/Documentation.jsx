@@ -1,172 +1,201 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, X } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Menu, X, ArrowUp } from "lucide-react";
+import Image from "next/image";
 
-const documentationSections = [
-  {
-    id: "intro",
-    title: "Introduction",
-    content:
-      "Welcome to the documentation. This guide will help you get started.",
-  },
-  {
-    id: "installation",
-    title: "Installation",
-    content: "Follow these steps to install the project dependencies.",
-  },
-  {
-    id: "usage",
-    title: "Usage",
-    content: "Learn how to use the key features of our system.",
-  },
-  {
-    id: "api",
-    title: "API Reference",
-    content: "Detailed information about our API endpoints and usage.",
-  },
-  {
-    id: "faq",
-    title: "FAQ",
-    content: "Common questions and troubleshooting tips.",
-  },
-  {
-    id: "support",
-    title: "Support",
-    content: "Need help? Contact our support team for assistance.",
-  },
-  {
-    id: "changelog",
-    title: "Changelog",
-    content: "Stay updated with the latest changes and new features.",
-  },
-];
+const Documentation = ({ content }) => {
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({ container: containerRef });
+  const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
-const Documentation = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("intro");
-  const navbarRef = useRef(null);
-  const [navbarHeight, setNavbarHeight] = useState(64);
-  let timeout; // ✅ FIXED: No NodeJS.Timeout
-
-  useEffect(() => {
-    if (navbarRef.current) {
-      setNavbarHeight(navbarRef.current.offsetHeight);
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      clearTimeout(timeout); // ✅ FIXED
-
-      timeout = setTimeout(() => {
-        // ✅ FIXED
-        const scrollPosition = window.scrollY + navbarHeight + 24;
-        documentationSections.forEach((section) => {
-          const sectionElement = document.getElementById(section.id);
-          if (sectionElement) {
-            const { offsetTop, offsetHeight } = sectionElement;
-            if (
-              scrollPosition >= offsetTop &&
-              scrollPosition < offsetTop + offsetHeight
-            ) {
-              setActiveSection(section.id);
-            }
+  // Section observer logic
+  const sectionObserver = useCallback(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
           }
         });
-      }, 50);
-    };
+      },
+      { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeout); // ✅ FIXED
-    };
-  }, [navbarHeight]);
+    content.sections.forEach((section) => {
+      const element = document.getElementById(section.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [content]);
+
+  useEffect(() => {
+    sectionObserver();
+  }, [sectionObserver]);
 
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-      setSidebarOpen(false);
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      setIsMobileNavOpen(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white relative">
-      {/* Mobile Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "TechArticle",
+            headline: "Product Documentation",
+            description: "Comprehensive product documentation and user guide",
+            author: {
+              "@type": "Organization",
+              name: "Your Company",
+            },
+          }),
+        }}
+      />
 
-      {/* Sidebar */}
-      <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out md:translate-x-0 md:w-72 md:relative ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+      {/* Mobile Navigation */}
+      <nav className="lg:hidden sticky top-0 bg-white dark:bg-gray-900 z-50 border-b">
+        <div className="flex items-center justify-between p-4">
+          <button
+            onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+            aria-label="Toggle navigation"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+          <h1 className="text-xl font-semibold">{content.title}</h1>
+          <div className="w-10" /> {/* Spacer */}
+        </div>
+      </nav>
+
+      {/* Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 h-1 bg-blue-600 z-50"
+        style={{ width: scrollProgress + "%" }}
+      />
+
+      {/* Back to Top */}
+      <motion.button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="fixed bottom-8 right-8 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        aria-label="Back to top"
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <h2 className="text-xl font-bold">Documentation</h2>
-          <button
-            className="md:hidden text-gray-400 hover:text-white"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-        <nav className="p-4 space-y-2 h-[calc(100vh-4rem)] overflow-y-auto">
-          {documentationSections.map((section) => (
-            <button
-              key={section.id}
-              onClick={() => scrollToSection(section.id)}
-              className={`w-full text-left p-3 rounded-lg transition-colors ${
-                activeSection === section.id
-                  ? "bg-blue-600 text-white"
-                  : "hover:bg-gray-700 text-gray-300"
-              }`}
-            >
-              {section.title}
-            </button>
-          ))}
-        </nav>
-      </aside>
+        <ArrowUp className="w-6 h-6" />
+      </motion.button>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto h-screen">
-        {/* Top Bar */}
-        <div
-          ref={navbarRef}
-          className="sticky top-0 bg-gray-900 z-40 p-4 shadow-md flex items-center justify-between"
+      <div className="lg:flex">
+        {/* Desktop Sidebar */}
+        <aside className="hidden lg:block w-80 fixed left-0 top-0 h-screen border-r bg-white dark:bg-gray-900 overflow-y-auto">
+          <div className="p-6">
+            <h2 className="text-2xl font-bold mb-8">{content.title}</h2>
+            <nav className="space-y-2">
+              {content.sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`w-full text-left p-3 rounded-lg transition-colors ${
+                    activeSection === section.id
+                      ? "bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300"
+                      : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
+                  aria-current={
+                    activeSection === section.id ? "page" : undefined
+                  }
+                >
+                  {section.title}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Mobile Sidebar */}
+        <motion.aside
+          className="lg:hidden fixed top-0 left-0 h-screen w-80 bg-white dark:bg-gray-900 z-50 border-r"
+          initial={{ x: "-100%" }}
+          animate={{ x: isMobileNavOpen ? 0 : "-100%" }}
+          transition={{ type: "tween", duration: 0.3 }}
         >
-          <button
-            className="md:hidden p-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <ArrowRight className="w-6 h-6 text-white" />
-          </button>
-          <div className="hidden md:block flex-1" /> {/* Spacer */}
-        </div>
+          <div className="p-4 flex items-center justify-between border-b">
+            <h2 className="text-xl font-bold">{content.title}</h2>
+            <button
+              onClick={() => setIsMobileNavOpen(false)}
+              aria-label="Close navigation"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          <nav className="p-4 space-y-2">
+            {content.sections.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+                className={`w-full text-left p-3 rounded-lg transition-colors ${
+                  activeSection === section.id
+                    ? "bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                }`}
+              >
+                {section.title}
+              </button>
+            ))}
+          </nav>
+        </motion.aside>
 
-        {/* Documentation Sections */}
-        <div className="p-4 sm:p-6 max-w-4xl mx-auto">
-          {documentationSections.map((section) => (
-            <motion.section
+        {/* Main Content */}
+        <main
+          ref={containerRef}
+          className="lg:ml-80 flex-1 p-6 max-w-4xl mx-auto overflow-y-auto h-screen"
+        >
+          <h1 className="text-3xl font-bold mb-8 hidden lg:block">
+            {content.title}
+          </h1>
+
+          {content.sections.map((section, index) => (
+            <section
               key={section.id}
               id={section.id}
-              className="mb-6 p-4 sm:p-6 bg-gray-800 shadow-md rounded-lg"
-              style={{ scrollMarginTop: navbarHeight + 16 }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              className="mb-12 scroll-mt-24"
             >
-              <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
-              <p className="text-gray-300 leading-relaxed">{section.content}</p>
-            </motion.section>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
+                <div className="prose dark:prose-invert max-w-none">
+                  {section.content}
+                  {section.image && (
+                    <div className="my-6">
+                      <Image
+                        src={section.image}
+                        alt={section.title}
+                        width={1200}
+                        height={630}
+                        className="rounded-lg shadow-lg"
+                        priority={index < 3}
+                      />
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            </section>
           ))}
-        </div>
+        </main>
       </div>
     </div>
   );
