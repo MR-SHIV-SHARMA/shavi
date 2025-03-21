@@ -1,11 +1,9 @@
-import { MAX_FILE_SIZE } from "./config";
-
-export function validatePdfFile(file) {
-    if (!file || file.type !== "application/pdf") {
-        return false;
-    }
-    if (file.size > MAX_FILE_SIZE) {
-        return false;
-    }
-    return true;
+// src/app/api/pdfConverter/validations.js
+export function validateFile(file) {
+  if (!file) {
+    throw new Error("No file uploaded");
+  }
+  if (file.size > config.maxFileSize) {
+    throw new Error("File size exceeds limit");
+  }
 }
