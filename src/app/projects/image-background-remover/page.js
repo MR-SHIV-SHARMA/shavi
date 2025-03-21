@@ -7,7 +7,7 @@ import Image from "next/image";
 import { CompareSlider } from "@/app/projects/image-background-remover/components/CompareSlider";
 import { LoadingSpinner } from "@/app/projects/image-background-remover/components/LoadingSpinner";
 
-const metadata = {
+const data = {
   title: "AI Background Remover | Instant Transparent Backgrounds",
   description:
     "Remove image backgrounds instantly with AI precision. Free online tool with instant downloads. Supports PNG, JPG, WEBP.",
@@ -52,7 +52,7 @@ export default function ImageBackgroundRemover() {
           "@context": "https://schema.org",
           "@type": "WebApplication",
           name: "AI Background Remover",
-          description: metadata.description,
+          description: data.description,
           applicationCategory: "ImageEditing",
           operatingSystem: "Web",
           offers: {
