@@ -100,7 +100,7 @@ const Documentation = ({ content }) => {
         {/* Desktop Sidebar */}
         <aside className="hidden lg:block w-80 fixed left-0 top-0 h-screen border-r bg-white dark:bg-gray-900 overflow-y-auto">
           <div className="p-6">
-            <h2 className="text-2xl font-bold mb-8">{content.title}</h2>
+            <h2 className="text-2xl font-bold mb-8 mt-4">{content.title}</h2>
             <nav className="space-y-2">
               {content.sections.map((section) => (
                 <button
@@ -159,7 +159,7 @@ const Documentation = ({ content }) => {
         {/* Main Content */}
         <main
           ref={containerRef}
-          className="lg:ml-80 flex-1 p-6 max-w-4xl mx-auto overflow-y-auto h-screen"
+          className="lg:ml-80 flex-1 p-6 max-w-6xl mx-auto overflow-y-auto h-screen"
         >
           <h1 className="text-3xl font-bold mb-8 hidden lg:block">
             {content.title}
