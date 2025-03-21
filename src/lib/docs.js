@@ -6,7 +6,7 @@ export async function getDocumentationContent() {
       {
         id: "getting-started",
         title: "Getting Started",
-        content: "<p>Welcome to our product documentation...</p>",
+        content: "Welcome to our product documentation...",
         image: "/docs/getting-started.jpg",
       },
       {
