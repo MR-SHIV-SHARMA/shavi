@@ -1,7 +1,7 @@
-// app/terms/page.js
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { format } from "date-fns";
 
 export const metadata = {
   title: "Terms of Service - Usage Guidelines",
@@ -57,7 +57,7 @@ export default function TermsOfService() {
               Terms of Service
             </h1>
             <p className="text-gray-600 dark:text-gray-300 mb-12">
-              Last Updated: {new Date().toLocaleDateString()}
+              Last Updated: {format(new Date(), "MMMM d, yyyy")}
             </p>
 
             <Section id="introduction" title="1. Introduction">
@@ -154,12 +154,12 @@ export default function TermsOfService() {
             <Section id="changes" title="9. Policy Changes">
               <p className="text-gray-600 dark:text-gray-300">
                 We will notify users of material changes through:
-                <ul className="list-disc pl-6 mt-2 space-y-2">
-                  <li>Email to registered users</li>
-                  <li>In-platform notifications</li>
-                  <li>Updated revision date at top of this document</li>
-                </ul>
               </p>
+              <ul className="list-disc pl-6 mt-2 space-y-2 text-gray-600 dark:text-gray-300">
+                <li>Email to registered users</li>
+                <li>In-platform notifications</li>
+                <li>Updated revision date at top of this document</li>
+              </ul>
             </Section>
 
             <Section id="contact" title="10. Contact Us">
