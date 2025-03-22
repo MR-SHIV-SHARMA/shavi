@@ -1,4 +1,4 @@
-import FAQ from "@/app/projects/imageBackgroundRemover/components/Faq";
+import FAQ from "@/app/projects/pdf-converter/components/Faq";
 
 export default function FAQPage() {
   return <FAQ />;

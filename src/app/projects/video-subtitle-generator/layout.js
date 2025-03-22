@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <div className="bg-gray-100 text-gray-900">
-      <CustomNavbar basePath="/projects/videoSubtitleGenerator" />
+      <CustomNavbar basePath="/projects/video-subtitle-generator" />
       <main className="container mx-auto min-h-screen p-6">{children}</main>
       <CustomFooter />
     </div>
