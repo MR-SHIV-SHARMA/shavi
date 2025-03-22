@@ -84,6 +84,14 @@ const tools = [
       "Smart lossless compression for images while maintaining visual quality",
     icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/compress.svg",
   },
+  {
+    id: 11,
+    name: "Video to Audio",
+    slug: "video-to-audio",
+    description:
+      "Easily extract high-quality audio from videos with our fast and efficient converter.",
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/file-audio.svg",
+  },
 ];
 
 const stats = [
