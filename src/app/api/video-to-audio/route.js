@@ -1,23 +1,26 @@
 import { NextResponse } from "next/server";
-import multer from "multer";
 import ffmpeg from "fluent-ffmpeg";
-import ffmpegPath from "ffmpeg-static";
 import fs from "fs";
 import path from "path";
 import { promisify } from "util";
+import * as ffmpegStaticModule from "ffmpeg-static";
 
-ffmpeg.setFfmpegPath(ffmpegPath);
+// Attempt to retrieve the FFmpeg binary path
+const ffmpegPath = ffmpegStaticModule.default || ffmpegStaticModule;
+if (typeof ffmpegPath === "string" && ffmpegPath) {
+  ffmpeg.setFfmpegPath(ffmpegPath);
+} else {
+  console.error("❌ ffmpeg-static did not provide a valid path.");
+}
 
-// Configure Multer for file uploads
-const upload = multer({ dest: "public/uploads/" });
+// Promisify file operations
+const unlinkAsync = promisify(fs.unlink);
+const writeFileAsync = promisify(fs.writeFile);
+const mkdirAsync = promisify(fs.mkdir);
 
-// Promisify multer for Next.js API support
-const uploadMiddleware = promisify(upload.single("video"));
-
-// Handle video-to-audio conversion
 export async function POST(req) {
   try {
-    // Parse the form data
+    // Parse form data
     const formData = await req.formData();
     const file = formData.get("video");
 
@@ -25,29 +28,38 @@ export async function POST(req) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // Save uploaded file
-    const videoPath = `public/uploads/${file.name}`;
-    const audioPath = `public/uploads/${file.name}.mp3`;
+    // Define upload paths
+    const uploadsDir = path.join(process.cwd(), "public/uploads");
+    if (!fs.existsSync(uploadsDir)) {
+      await mkdirAsync(uploadsDir, { recursive: true });
+    }
 
+    // Generate unique filenames
+    const timestamp = Date.now();
+    const videoPath = path.join(uploadsDir, `${timestamp}-${file.name}`);
+    const audioPath = path.join(uploadsDir, `${timestamp}-${file.name}.mp3`);
+
+    // Save the uploaded video file
     const buffer = Buffer.from(await file.arrayBuffer());
-    fs.writeFileSync(videoPath, buffer);
+    await writeFileAsync(videoPath, buffer);
 
-    // Convert video to MP3
+    // Convert video to audio (MP3)
     await new Promise((resolve, reject) => {
       ffmpeg(videoPath)
+        .output(audioPath)
         .toFormat("mp3")
         .on("end", resolve)
         .on("error", reject)
-        .save(audioPath);
+        .run();
     });
 
-    // Cleanup the video file after conversion
-    fs.unlinkSync(videoPath);
+    // Delete the original video file after conversion
+    await unlinkAsync(videoPath);
 
-    // Return the converted audio file URL
-    return NextResponse.json({ audioUrl: `/uploads/${file.name}.mp3` });
+    // Return the audio file URL
+    return NextResponse.json({ audioUrl: `/uploads/${timestamp}-${file.name}.mp3` });
   } catch (error) {
-    console.error("Error:", error);
+    console.error("FFmpeg Conversion Error:", error);
     return NextResponse.json({ error: "Conversion failed" }, { status: 500 });
   }
 }
