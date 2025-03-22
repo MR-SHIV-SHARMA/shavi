@@ -1,3 +1,5 @@
+// src/app/projects/video-to-audio/page.js
+"use client";
 import { useState } from "react";
 
 export default function VideoToAudio() {
@@ -30,7 +32,7 @@ export default function VideoToAudio() {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("http://localhost:5000/convert", {
+      const response = await fetch("/api/video-to-audio", {
         method: "POST",
         body: formData,
       });
