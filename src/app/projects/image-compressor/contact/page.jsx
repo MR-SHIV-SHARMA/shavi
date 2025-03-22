@@ -1,4 +1,4 @@
-import Contact from "@/app/projects/imageBackgroundRemover/components/Contact";
+import Contact from "@/app/projects/image-compressor/components/Contact";
 
 export default function ContactPage() {
   return <Contact />;

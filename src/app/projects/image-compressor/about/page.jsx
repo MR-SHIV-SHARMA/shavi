@@ -1,4 +1,4 @@
-import About from "@/app/projects/imageBackgroundRemover/components/About";
+import About from "@/app/projects/image-compressor/components/About";
 
 export default function AboutPage() {
   return <About />;
