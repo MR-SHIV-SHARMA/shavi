@@ -1,4 +1,4 @@
-import FAQ from "@/app/projects/image-background-remover/components/Faq";
+import FAQ from "@/app/projects/video-to-audio/components/Faq";
 
 export default function FAQPage() {
   return <FAQ />;
