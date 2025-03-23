@@ -6,6 +6,37 @@ import { motion } from "framer-motion";
 const tools = [
   {
     id: 1,
+    name: "JSON Formatter",
+    slug: "json-formatter",
+    description: "Format and beautify your JSON data for better readability.",
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/code.svg",
+  },
+  {
+    id: 8,
+    name: "Code Formatter",
+    slug: "code-formatter",
+    description:
+      "Automatically format and beautify code in 20+ programming languages",
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/code.svg",
+  },
+  {
+    id: 10,
+    name: "Image Compressor",
+    slug: "image-compressor",
+    description:
+      "Smart lossless compression for images while maintaining visual quality",
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/compress.svg",
+  },
+  {
+    id: 4,
+    name: "PDF Converter",
+    slug: "pdf-converter",
+    description:
+      "Convert PDFs to editable formats while preserving layout and formatting",
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/file-pdf.svg",
+  },
+  {
+    id: 13,
     name: "Image Background Remover",
     slug: "image-background-remover",
     description:
@@ -27,14 +58,6 @@ const tools = [
     description:
       "Instantly translate documents between 50+ languages with AI-driven accuracy",
     icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/language.svg",
-  },
-  {
-    id: 4,
-    name: "PDF Converter",
-    slug: "pdf-converter",
-    description:
-      "Convert PDFs to editable formats while preserving layout and formatting",
-    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/file-pdf.svg",
   },
   {
     id: 5,
@@ -61,28 +84,12 @@ const tools = [
     icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/exchange-alt.svg",
   },
   {
-    id: 8,
-    name: "Code Formatter",
-    slug: "code-formatter",
-    description:
-      "Automatically format and beautify code in 20+ programming languages",
-    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/code.svg",
-  },
-  {
     id: 9,
     name: "Ebook Converter",
     slug: "ebook-converter",
     description:
       "Convert between EPUB, MOBI, PDF and other ebook formats seamlessly",
     icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/book.svg",
-  },
-  {
-    id: 10,
-    name: "Image Compressor",
-    slug: "image-compressor",
-    description:
-      "Smart lossless compression for images while maintaining visual quality",
-    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/compress.svg",
   },
   {
     id: 11,
@@ -99,13 +106,6 @@ const tools = [
     description:
       "Convert files between different formats quickly and efficiently.",
     icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/file.svg",
-  },
-  {
-    id: 13,
-    name: "JSON Formatter",
-    slug: "json-formatter",
-    description: "Format and beautify your JSON data for better readability.",
-    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/code.svg",
   },
 ];
 
