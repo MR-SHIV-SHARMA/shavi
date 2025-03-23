@@ -27,14 +27,12 @@ export default function HomePage() {
     });
 
     if (!res.ok) {
-      console.error("❌ Error in compression:", res.statusText);
+      console.error("❌ Error in compression:", await res.text());
       return;
     }
 
     const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-
-    setCompressedFile(url);
+    setCompressedFile(blob);
     setFileSize((prev) => ({
       ...prev,
       compressed: (blob.size / 1024).toFixed(2),
@@ -42,10 +40,14 @@ export default function HomePage() {
   };
 
   const handleDownload = () => {
-    if (!compressedFile) return;
+    if (!compressedFile) {
+      console.error("❌ No compressed file available");
+      return;
+    }
 
+    const url = window.URL.createObjectURL(compressedFile);
     const a = document.createElement("a");
-    a.href = compressedFile;
+    a.href = url;
     a.download = `compressed.${selectedFormat}`;
     document.body.appendChild(a);
     a.click();
@@ -57,6 +59,7 @@ export default function HomePage() {
       <h1 className="text-2xl font-semibold text-gray-800 mb-4">
         Image Compressor
       </h1>
+
       <input
         type="file"
         accept="image/*"
@@ -75,7 +78,6 @@ export default function HomePage() {
         <option value="gif">GIF</option>
         <option value="tiff">TIFF</option>
         <option value="bmp">BMP</option>
-        <option value="pdf">PDF</option>
       </select>
 
       {originalImage && (
@@ -95,24 +97,14 @@ export default function HomePage() {
           {compressedFile && (
             <div className="flex flex-col items-center">
               <p className="text-sm text-gray-600">Compressed File</p>
-
-              {selectedFormat === "pdf" ? (
-                <iframe
-                  src={compressedFile}
-                  className="w-64 h-64 border rounded-lg"
-                />
-              ) : (
-                <img
-                  src={compressedFile}
-                  alt="Compressed"
-                  className="w-48 h-48 object-cover border rounded-lg"
-                />
-              )}
-
+              <img
+                src={URL.createObjectURL(compressedFile)}
+                alt="Compressed"
+                className="w-48 h-48 object-cover border rounded-lg"
+              />
               <p className="text-xs text-gray-500 mt-2">
                 Size: {fileSize.compressed} KB
               </p>
-
               <button
                 onClick={handleDownload}
                 className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm mt-2"
