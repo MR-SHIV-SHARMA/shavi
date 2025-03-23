@@ -6,7 +6,7 @@ import Head from "next/head";
 import { FiCopy, FiRefreshCw, FiCode, FiSun, FiMoon } from "react-icons/fi";
 import { Toaster, toast } from "react-hot-toast";
 
-const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
+const ReactJson = dynamic(() => import("@microlink/react-json-view"), { ssr: false });
 
 export default function JsonFormatter() {
   const [jsonText, setJsonText] = useState("");
