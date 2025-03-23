@@ -92,6 +92,21 @@ const tools = [
       "Easily extract high-quality audio from videos with our fast and efficient converter.",
     icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/file-audio.svg",
   },
+  {
+    id: 12,
+    name: "File Conversion",
+    slug: "file-conversion",
+    description:
+      "Convert files between different formats quickly and efficiently.",
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/file.svg",
+  },
+  {
+    id: 13,
+    name: "JSON Formatter",
+    slug: "json-formatter",
+    description: "Format and beautify your JSON data for better readability.",
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/code.svg",
+  },
 ];
 
 const stats = [
