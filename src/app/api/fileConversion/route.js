@@ -8,7 +8,7 @@ import JSZip from "jszip";
 import { parse as parseYAML } from "yaml";
 import ini from "ini";
 import { parse as parseTOML } from "@iarna/toml";
-import { extract as extractEPUB } from "epub2";
+// import { extract as extractEPUB } from "epub2";
 import { parse as parseVCard } from "vcard4";
 import { parse as parseICS } from "ical";
 import pdfParse from "pdf-parse";
@@ -126,7 +126,7 @@ async function convertPDFtoText(arrayBuffer) {
 // DOCX कन्वर्शन
 async function convertDOCXtoText(arrayBuffer) {
   const buffer = Buffer.from(arrayBuffer);
-  const { value } = await mammoth.extractRawText({ buffer });
+//   const { value } = await mammoth.extractRawText({ buffer });
   return value;
 }
 
@@ -180,8 +180,8 @@ async function convertZIPtoText(arrayBuffer) {
 
 // EPUB कन्वर्शन
 async function convertEPUBtoText(arrayBuffer) {
-  const extracted = await extractEPUB(arrayBuffer);
-  return extracted ? extracted.text : "Unable to extract EPUB content";
+// //   const extracted = await extractEPUB(arrayBuffer);
+// // //   return extracted ? extracted.text : "Unable to extract EPUB content";
 }
 
 // YAML कन्वर्शन
