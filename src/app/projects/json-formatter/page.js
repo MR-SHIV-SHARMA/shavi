@@ -3,39 +3,17 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import {
-  FiCopy,
-  FiTrash2,
-  FiRefreshCw,
-  FiCode,
-  FiSun,
-  FiMoon,
-  FiCheck,
-} from "react-icons/fi";
+import { FiCopy, FiRefreshCw, FiCode, FiSun, FiMoon } from "react-icons/fi";
 import { Toaster, toast } from "react-hot-toast";
 
-// Lazy load JSON viewer with proper error handling
-const ReactJson = dynamic(
-  () =>
-    import("react-json-view").catch(() => ({
-      default: () => <div>JSON viewer unavailable</div>,
-    })),
-  {
-    ssr: false,
-    loading: () => <div className="text-gray-500">Loading viewer...</div>,
-  }
-);
+const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
 export default function JsonFormatter() {
   const [jsonText, setJsonText] = useState("");
   const [parsedJson, setParsedJson] = useState(null);
   const [theme, setTheme] = useState("dark");
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState({
-    collapsed: 1,
-    indentWidth: 2,
-    sortKeys: false,
-  });
+  const [viewMode, setViewMode] = useState("tree");
 
   const defaultJson = {
     name: "John Doe",
@@ -153,6 +131,27 @@ export default function JsonFormatter() {
               <div className="flex items-center justify-between">
                 <h2 className="font-semibold">Formatted Output</h2>
                 <div className="flex gap-2">
+                  <select
+                    value={viewMode}
+                    onChange={(e) => setViewMode(e.target.value)}
+                    className="p-2 border rounded-md "
+                  >
+                    <option value="tree" className="text-black">
+                      Tree
+                    </option>
+                    <option value="text" className="text-black">
+                      Text
+                    </option>
+                    <option value="form" className="text-black">
+                      Form
+                    </option>
+                    <option value="view" className="text-black">
+                      View
+                    </option>
+                    <option value="code" className="text-black">
+                      Code
+                    </option>
+                  </select>
                   <button
                     onClick={handleCopy}
                     disabled={!parsedJson}
@@ -170,55 +169,50 @@ export default function JsonFormatter() {
                 }`}
               >
                 {parsedJson ? (
-                  <ReactJson
-                    src={parsedJson}
-                    theme={theme === "dark" ? "monokai" : "rjv-default"}
-                    collapsed={options.collapsed}
-                    indentWidth={options.indentWidth}
-                    sortKeys={options.sortKeys}
-                    displayDataTypes={false}
-                    style={{ backgroundColor: "transparent" }}
-                  />
+                  viewMode === "tree" ? (
+                    <ReactJson
+                      src={parsedJson}
+                      theme={theme === "dark" ? "monokai" : "rjv-default"}
+                    />
+                  ) : viewMode === "text" ? (
+                    <pre className="whitespace-pre-wrap">
+                      {JSON.stringify(parsedJson, null, 2)}
+                    </pre>
+                  ) : viewMode === "form" ? (
+                    <form className="space-y-2">
+                      {Object.entries(parsedJson).map(([key, value]) => (
+                        <div key={key} className="flex gap-2 items-center">
+                          <label className="font-medium w-32">{key}:</label>
+                          <input
+                            type="text"
+                            value={value}
+                            readOnly
+                            className="p-1 border rounded w-full"
+                          />
+                        </div>
+                      ))}
+                    </form>
+                  ) : viewMode === "view" ? (
+                    <div className="space-y-2">
+                      {Object.entries(parsedJson).map(([key, value]) => (
+                        <div
+                          key={key}
+                          className="p-2 border rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+                        >
+                          <strong>{key}:</strong> {JSON.stringify(value)}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <pre className="p-2 border rounded bg-gray-800 text-white">
+                      {jsonText}
+                    </pre>
+                  )
                 ) : (
                   <div className="text-gray-500">
                     Formatted JSON will appear here...
                   </div>
                 )}
-              </div>
-            </div>
-          </section>
-
-          <section className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={options.sortKeys}
-                  onChange={(e) =>
-                    setOptions((p) => ({ ...p, sortKeys: e.target.checked }))
-                  }
-                  className="rounded text-blue-500"
-                />
-                Sort Keys
-              </label>
-              <div className="space-y-1">
-                <label className="text-sm">Collapse Depth</label>
-                <select
-                  value={options.collapsed}
-                  onChange={(e) =>
-                    setOptions((p) => ({
-                      ...p,
-                      collapsed: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full p-1.5 rounded border bg-transparent"
-                >
-                  {[0, 1, 2, 3].map((n) => (
-                    <option key={n} value={n}>
-                      {n === 0 ? "Expanded" : `Level ${n}`}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
           </section>
