@@ -62,7 +62,7 @@ export default function JsonFormatter() {
 
   const handleReset = () => {
     setJsonText(JSON.stringify(defaultJson, null, 2));
-    handleFormat();
+    setParsedJson(null);
   };
 
   return (
