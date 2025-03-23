@@ -1,5 +1,8 @@
 "use client";
+
 import { useState } from "react";
+import Head from "next/head";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const [originalImage, setOriginalImage] = useState(null);
@@ -25,11 +28,8 @@ export default function HomePage() {
       method: "POST",
       body: formData,
     });
-
-    if (!res.ok) {
-      console.error("❌ Error in compression:", await res.text());
-      return;
-    }
+    if (!res.ok)
+      return console.error("❌ Compression error:", await res.text());
 
     const blob = await res.blob();
     setCompressedFile(blob);
@@ -40,10 +40,8 @@ export default function HomePage() {
   };
 
   const handleDownload = () => {
-    if (!compressedFile) {
-      console.error("❌ No compressed file available");
-      return;
-    }
+    if (!compressedFile)
+      return console.error("❌ No compressed file available");
 
     const url = window.URL.createObjectURL(compressedFile);
     const a = document.createElement("a");
@@ -55,66 +53,80 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-        Image Compressor
-      </h1>
+    <>
+      <Head>
+        <title>Image Compressor | Optimize Your Images</title>
+        <meta
+          name="description"
+          content="Compress images online and download optimized files in various formats."
+        />
+      </Head>
 
-      <input
-        type="file"
-        accept="image/*"
-        className="mb-4 p-2 border border-gray-300 rounded-lg"
-        onChange={handleUpload}
-      />
+      <div className="flex flex-col items-center p-6 min-h-screen bg-gray-50">
+        <motion.h1
+          className="text-3xl font-bold text-gray-800 mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          Image Compressor
+        </motion.h1>
 
-      <select
-        className="mb-4 p-2 border border-gray-300 rounded-lg"
-        value={selectedFormat}
-        onChange={(e) => setSelectedFormat(e.target.value)}
-      >
-        <option value="jpeg">JPEG</option>
-        <option value="png">PNG</option>
-        <option value="webp">WEBP</option>
-        <option value="gif">GIF</option>
-        <option value="tiff">TIFF</option>
-        <option value="bmp">BMP</option>
-      </select>
+        <input
+          type="file"
+          accept="image/*"
+          className="mb-4 p-3 border border-gray-300 rounded-lg shadow-sm w-full max-w-xs"
+          onChange={handleUpload}
+        />
 
-      {originalImage && (
-        <div className="flex flex-col md:flex-row gap-6 bg-white p-4 shadow-lg rounded-lg">
-          <div className="flex flex-col items-center">
-            <p className="text-sm text-gray-600">Original Image</p>
-            <img
-              src={originalImage}
-              alt="Original"
-              className="w-48 h-48 object-cover border rounded-lg"
-            />
-            <p className="text-xs text-gray-500 mt-2">
-              Size: {fileSize.original} KB
-            </p>
-          </div>
+        <select
+          className="mb-4 p-3 border border-gray-300 rounded-lg shadow-sm w-full max-w-xs"
+          value={selectedFormat}
+          onChange={(e) => setSelectedFormat(e.target.value)}
+        >
+          <option value="jpeg">JPEG</option>
+          <option value="png">PNG</option>
+          <option value="webp">WEBP</option>
+          <option value="gif">GIF</option>
+          <option value="tiff">TIFF</option>
+          <option value="bmp">BMP</option>
+        </select>
 
-          {compressedFile && (
+        {originalImage && (
+          <div className="flex flex-col md:flex-row gap-6 bg-white p-6 shadow-lg rounded-lg">
             <div className="flex flex-col items-center">
-              <p className="text-sm text-gray-600">Compressed File</p>
+              <p className="text-sm text-gray-600">Original Image</p>
               <img
-                src={URL.createObjectURL(compressedFile)}
-                alt="Compressed"
+                src={originalImage}
+                alt="Original"
                 className="w-48 h-48 object-cover border rounded-lg"
               />
               <p className="text-xs text-gray-500 mt-2">
-                Size: {fileSize.compressed} KB
+                Size: {fileSize.original} KB
               </p>
-              <button
-                onClick={handleDownload}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm mt-2"
-              >
-                Download as {selectedFormat.toUpperCase()}
-              </button>
             </div>
-          )}
-        </div>
-      )}
-    </div>
+
+            {compressedFile && (
+              <div className="flex flex-col items-center">
+                <p className="text-sm text-gray-600">Compressed File</p>
+                <img
+                  src={URL.createObjectURL(compressedFile)}
+                  alt="Compressed"
+                  className="w-48 h-48 object-cover border rounded-lg"
+                />
+                <p className="text-xs text-gray-500 mt-2">
+                  Size: {fileSize.compressed} KB
+                </p>
+                <button
+                  onClick={handleDownload}
+                  className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md text-sm"
+                >
+                  Download as {selectedFormat.toUpperCase()}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
