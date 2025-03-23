@@ -8,10 +8,16 @@ export async function POST(req) {
       return NextResponse.json({ error: "Code is required" }, { status: 400 });
     }
 
+    const supportedParsers = ["babel", "typescript", "json", "html", "css"];
+    const parser =
+      body.parser && supportedParsers.includes(body.parser)
+        ? body.parser
+        : "babel";
+
     const formattedCode = await prettier.format(body.code, {
-      parser: "babel",
-      semi: true,
-      singleQuote: true,
+      parser,
+      semi: body.semi ?? true,
+      singleQuote: body.singleQuote ?? true,
     });
 
     return NextResponse.json({ formattedCode });
