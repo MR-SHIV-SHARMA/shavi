@@ -18,6 +18,11 @@ export async function POST(req) {
       parser,
       semi: body.semi ?? true,
       singleQuote: body.singleQuote ?? true,
+      tabWidth: body.tabWidth ?? 2,
+      bracketSpacing: body.bracketSpacing ?? true,
+      arrowParens: body.arrowParens ?? "always",
+      printWidth: body.printWidth ?? 80,
+      endOfLine: body.endOfLine ?? "lf",
     });
 
     return NextResponse.json({ formattedCode });
