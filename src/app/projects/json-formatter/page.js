@@ -106,7 +106,7 @@ export default function JsonFormatter() {
       <div
         className={`min-h-screen p-4 md:p-8 transition-colors ${theme === "dark" ? "bg-gray-900" : "bg-gray-50"}`}
       >
-        <main className="max-w-4xl mx-auto space-y-6">
+        <main className="max-w-8xl mx-auto space-y-6">
           <header className="flex items-center justify-between">
             <h1 className="text-2xl font-bold flex items-center gap-2">
               <FiCode className="text-blue-500" />
@@ -141,7 +141,7 @@ export default function JsonFormatter() {
                 value={jsonText}
                 onChange={(e) => setJsonText(e.target.value)}
                 placeholder="Paste JSON here..."
-                className={`w-full h-64 p-4 font-mono text-sm rounded-lg border ${
+                className={`w-full h-96 p-4 font-mono text-sm rounded-lg border ${
                   theme === "dark"
                     ? "bg-gray-800 border-gray-700 focus:border-blue-500 text-gray-100"
                     : "bg-white border-gray-300 focus:border-blue-500 text-gray-900"
@@ -163,7 +163,7 @@ export default function JsonFormatter() {
                 </div>
               </div>
               <div
-                className={`h-64 overflow-auto p-4 rounded-lg border ${
+                className={`h-96 overflow-auto p-4 rounded-lg border ${
                   theme === "dark"
                     ? "border-gray-700 bg-gray-800"
                     : "border-gray-300 bg-white"
