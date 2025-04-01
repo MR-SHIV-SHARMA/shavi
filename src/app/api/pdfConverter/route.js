@@ -1,97 +1,83 @@
-import { NextResponse } from "next/server";
-import formidable from "formidable";
-import fs from "fs-extra";
-import { PDFDocument } from "pdf-lib";
-import mammoth from "mammoth";
-import pdfParse from "pdf-parse";
+import fs from "fs";
 import path from "path";
+import { NextResponse } from "next/server";
+import { IncomingForm } from "formidable";
+import { Poppler } from "node-poppler";
+import { promisify } from "util";
+import { Readable } from "stream";
+
+const tempDir = path.join(process.cwd(), "public/temp");
+if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir, { recursive: true });
+
+// Convert buffer to readable stream
+const bufferToStream = (buffer) => {
+  const stream = new Readable();
+  stream.push(buffer);
+  stream.push(null);
+  return stream;
+};
 
 export async function POST(req) {
-  const form = formidable({ multiples: false, keepExtensions: true });
+  console.log("📨 Received POST request");
 
-  return new Promise((resolve, reject) => {
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        return resolve(
-          NextResponse.json({ error: "File parsing error" }, { status: 500 })
-        );
-      }
+  try {
+    // ✅ Read the entire request body as a buffer
+    const chunks = [];
+    for await (const chunk of req.body) {
+      chunks.push(chunk);
+    }
+    const buffer = Buffer.concat(chunks);
+    console.log("📥 Request body received, size:", buffer.length);
 
-      const file = files.file;
-      if (!file) {
-        return resolve(
-          NextResponse.json({ error: "No file uploaded" }, { status: 400 })
-        );
-      }
-
-      const fileExt = path.extname(file.originalFilename).toLowerCase();
-      const filePath = file.filepath;
-      const outputPath = filePath.replace(fileExt, ".pdf");
-
-      try {
-        let convertedBuffer;
-
-        if (fileExt === ".docx") {
-          convertedBuffer = await docxToPdf(filePath);
-        } else if ([".jpg", ".jpeg", ".png"].includes(fileExt)) {
-          convertedBuffer = await imageToPdf(filePath);
-        } else if (fileExt === ".pdf") {
-          const extracted = await pdfToText(filePath);
-          return resolve(
-            NextResponse.json({ text: extracted }, { status: 200 })
-          );
-        } else {
-          return resolve(
-            NextResponse.json(
-              { error: "Unsupported file format" },
-              { status: 400 }
-            )
-          );
-        }
-
-        resolve(
-          new NextResponse(convertedBuffer, {
-            headers: {
-              "Content-Type": "application/pdf",
-              "Content-Disposition": `attachment; filename="converted.pdf"`,
-            },
-          })
-        );
-      } catch (error) {
-        console.error(error);
-        resolve(
-          NextResponse.json({ error: "Conversion failed" }, { status: 500 })
-        );
-      } finally {
-        fs.removeSync(filePath);
-      }
+    const form = new IncomingForm({
+      uploadDir: tempDir,
+      keepExtensions: true,
+      maxFileSize: 10 * 1024 * 1024, // 10MB limit
+      multiples: false,
     });
-  });
-}
 
-// Convert DOCX to PDF
-async function docxToPdf(filePath) {
-  const result = await mammoth.extractRawText({ path: filePath });
-  const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage([600, 800]);
-  page.drawText(result.value, { x: 50, y: 750, size: 12 });
-  return pdfDoc.save();
-}
+    // ✅ Convert buffer into readable stream
+    const stream = bufferToStream(buffer);
+    const parseForm = promisify(form.parse.bind(form));
 
-// Convert Image to PDF
-async function imageToPdf(filePath) {
-  const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage([600, 800]);
-  const imageBytes = await fs.readFile(filePath);
-  const image = await pdfDoc.embedJpg(imageBytes);
-  page.drawImage(image, { x: 50, y: 50, width: 500, height: 700 });
-  return pdfDoc.save();
-}
+    try {
+      const [fields, files] = await parseForm(stream);
+      console.log("📄 Parsed files:", files);
 
-// Extract text from PDF
-async function pdfToText(filePath) {
-  const data = await pdfParse(await fs.readFile(filePath));
-  return data.text;
+      if (!files.file) {
+        console.warn("⚠️ No file uploaded");
+        return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+      }
+
+      const uploadedFile = files.file;
+      const pdfFilePath = uploadedFile.path;
+      const textOutputPath = path.join(tempDir, uploadedFile.name.replace(".pdf", ".txt"));
+
+      console.log("📂 Processing PDF:", pdfFilePath);
+
+      // ✅ Extract text using Poppler
+      const poppler = new Poppler();
+      await poppler.pdfToText(pdfFilePath, textOutputPath, {
+        firstPageToConvert: 1,
+        lastPageToConvert: 5, // Change as needed
+      });
+
+      // ✅ Read extracted text
+      const extractedText = fs.readFileSync(textOutputPath, "utf-8");
+
+      return NextResponse.json({
+        success: true,
+        filename: uploadedFile.name,
+        extractedText,
+      });
+    } catch (parseError) {
+      console.error("❌ Formidable parse error:", parseError);
+      return NextResponse.json({ error: "File upload failed" }, { status: 500 });
+    }
+  } catch (error) {
+    console.error("🔥 Top-level error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }
 
 export const config = { api: { bodyParser: false } };
