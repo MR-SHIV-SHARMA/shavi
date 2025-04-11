@@ -4,8 +4,6 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
-import { CompareSlider } from "@/app/projects/image-background-remover/components/CompareSlider";
-import { LoadingSpinner } from "@/app/projects/image-background-remover/components/LoadingSpinner";
 
 const data = {
   title: "AI Background Remover | Instant Transparent Backgrounds",
@@ -125,7 +123,6 @@ export default function ImageBackgroundRemover() {
                 exit={{ opacity: 0 }}
                 className="mt-6"
               >
-                <LoadingSpinner />
                 <p className="text-gray-300 mt-4">
                   AI is processing your image...
                 </p>
@@ -141,7 +138,7 @@ export default function ImageBackgroundRemover() {
               className="mt-8"
             >
               <h2 className="text-xl font-semibold text-white mb-4">Result</h2>
-              <CompareSlider
+              <div
                 original={image}
                 processed={processedImage}
                 className="rounded-lg shadow-2xl"
