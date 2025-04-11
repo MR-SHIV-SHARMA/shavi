@@ -11,16 +11,14 @@ const socialFormats = {
   "Facebook Cover (205:78)": { width: 820, height: 312, aspectRatio: "205:78" },
 };
 
-type SocialFormat = keyof typeof socialFormats;
-
 export default function SocialShare() {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-  const [selectedFormat, setSelectedFormat] = useState<SocialFormat>(
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [selectedFormat, setSelectedFormat] = useState(
     "Instagram Square (1:1)"
   );
   const [isUploading, setIsUploading] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef(null);
 
   useEffect(() => {
     if (uploadedImage) {
@@ -28,9 +26,7 @@ export default function SocialShare() {
     }
   }, [selectedFormat, uploadedImage]);
 
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileUpload = async (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
     setIsUploading(true);
@@ -38,7 +34,7 @@ export default function SocialShare() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("/api/image-upload", {
+      const response = await fetch("/api/social-media-image-size-generator", {
         method: "POST",
         body: formData,
       });
@@ -64,9 +60,7 @@ export default function SocialShare() {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `${selectedFormat
-          .replace(/\s+/g, "_")
-          .toLowerCase()}.png`;
+        link.download = `${selectedFormat.replace(/\s+/g, "_").toLowerCase()}.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -107,9 +101,7 @@ export default function SocialShare() {
                 <select
                   className="select select-bordered w-full"
                   value={selectedFormat}
-                  onChange={(e) =>
-                    setSelectedFormat(e.target.value as SocialFormat)
-                  }
+                  onChange={(e) => setSelectedFormat(e.target.value)}
                 >
                   {Object.keys(socialFormats).map((format) => (
                     <option key={format} value={format}>

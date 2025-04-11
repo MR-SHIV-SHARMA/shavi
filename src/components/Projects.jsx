@@ -107,6 +107,14 @@ const tools = [
       "Convert files between different formats quickly and efficiently.",
     icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/file.svg",
   },
+  {
+    id: 14,
+    name: "Social Media Image Size Generator",
+    slug: "social-media-image-size-generator",
+    description:
+      "Convert files between different formats quickly and efficiently.",
+    icon: "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/svgs/solid/file.svg",
+  },
 ];
 
 const stats = [
